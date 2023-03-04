@@ -39,12 +39,12 @@ public class MyController {
     public Courses addCourse(@RequestBody Courses course){
         return this.courseService.addCourse(course);
     }
-    @PutMapping("/courses/{courseId}")
+    /* @PutMapping("/courses/{courseId}")
     public Courses updateCourse(@PathVariable String courseId,@RequestBody Courses course){
         return this.courseService.updateCourse(Long.parseLong(courseId),course);
-    }
+    } */
     @PutMapping("/courses")
-    public Courses updateByCourse(@PathVariable String courseId,@RequestBody Courses course){
+    public Courses updateByCourse(@RequestBody Courses course){
         return this.courseService.updateByCourse(course);
     }
     @DeleteMapping("/courses/{courseId}")

@@ -1,37 +1,50 @@
 package com.springrest.springrest.services;
+import com.springrest.springrest.dao.CourseDao;
 import com.springrest.springrest.entities.Courses;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CourseServiceImpl implements CourseService {
-    List<Courses> list;
+
+    @Autowired
+    private CourseDao courseDao;
+//    List<Courses> list;
+
     public CourseServiceImpl(){
-        list=new ArrayList<>();
+        /* list=new ArrayList<>();
         list.add(new Courses(145,"Spring Boot Course","13 hours Course"));
-        list.add(new Courses(150,"Django Course","15 hours Course"));
+        list.add(new Courses(150,"Django Course","15 hours Course")); */
     }
     public List<Courses> getCourses(){
-        return list;
+        /* return list; */
+        return courseDao.findAll();
     }
     public Courses getCourses(long courseId){
-        Courses c=null;
+        /* Courses c=null;
         for(Courses course:list){
             if(course.getId()==courseId){
                 c=course;
                 break;
             }
         }
-        return c;
+        return c; */
+        return courseDao.getReferenceById(courseId);
+
     }
     public Courses addCourse(Courses course){
-        list.add(course);
+        /* list.add(course); */
+        courseDao.save(course);
         return course;
     }
-    public Courses updateCourse(long courseId,Courses course){
+
+    //My Method
+
+    /* public Courses updateCourse(long courseId,Courses course){
         
         int i=0;
         for(Courses specificCourse:list){
@@ -42,19 +55,20 @@ public class CourseServiceImpl implements CourseService {
             i++;
         }
         return course; 
-    }
+    } */
 
     public Courses updateByCourse(Courses course){
-        list.forEach(e->{
+        /* list.forEach(e->{
             if(e.getId()==course.getId()){
                 e.setTitle(course.getTitle());
                 e.setDescription(course.getDescription());
             }
-        });
+        }); */
+        courseDao.save(course);
         return course;
     } 
     public Courses deleteCourse(long courseId){
-        int i=0;
+        /* int i=0;
         Courses c=null;
 
         for(Courses specificCourse:list){
@@ -65,9 +79,17 @@ public class CourseServiceImpl implements CourseService {
             }
             i++;
         }
-        return c; 
+        return c;  */
+        Courses entity=courseDao.getReferenceById(courseId);
+        courseDao.delete(entity);
+        return entity;
     }
-    /*public void deleteCourse(long parseLong){
+    /* public void deleteCourse(long parseLong){
         list=this.list.stream().filter(e->e.getId()!=parseLong).collect(Collectors.toList());
+    } */
+   /*  @Override
+    public Courses updateCourse(long courseId, Courses course) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateCourse'");
     } */
 }
