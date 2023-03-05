@@ -33,7 +33,7 @@ public class CourseServiceImpl implements CourseService {
             }
         }
         return c; */
-        return courseDao.getReferenceById(courseId);
+        return courseDao.findById(courseId).orElse(null);
 
     }
     public Courses addCourse(Courses course){
@@ -80,9 +80,13 @@ public class CourseServiceImpl implements CourseService {
             i++;
         }
         return c;  */
-        Courses entity=courseDao.getReferenceById(courseId);
+        /* Courses entity=courseDao.findById(courseId).orElse(null);
         courseDao.delete(entity);
+        return entity; */
+        Courses entity=courseDao.findById(courseId).orElse(null);
+        courseDao.deleteById(courseId);
         return entity;
+
     }
     /* public void deleteCourse(long parseLong){
         list=this.list.stream().filter(e->e.getId()!=parseLong).collect(Collectors.toList());
